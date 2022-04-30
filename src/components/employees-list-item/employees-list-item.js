@@ -4,7 +4,7 @@ const EmployeesListItem = ({salary, name, increase}) => {
 
     let styleLI = "list-group-item d-flex justify-content-between"
     
-    if(increase === true) {
+    if(increase) {
         styleLI += " increase"
     }
 
