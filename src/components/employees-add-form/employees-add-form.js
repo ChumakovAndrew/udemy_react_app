@@ -6,22 +6,36 @@ class EmployeesAddForm extends Component{
         super(props)
         this.state = {
             name: '',
-            salary: 0
-
+            salary: 0,
+            error: " "
         }
     }
 
     onSubmitForm = (e) => {
         e.preventDefault()
         const {onAdd} = this.props
-        const {name, salary} = this.state
+        const {name, salary, error} = this.state
 
-        onAdd(name, salary)
+        if(name !== "" && name !== " " && name.length < 12 && salary !== 0 && salary !== "" && salary !== " " && salary.length < 6){
+            onAdd(name, salary)
+            this.setState({error: "сотрудник добавлен"})
+        }
+        else{
+            this.setState({error: "вы ввели не корректные данные"})
+        }
 
         this.setState({
             name: "",
             salary: 0
         })
+
+        if(error !== ""){
+            setTimeout(() => { 
+                this.setState({
+                    error: ""
+                })
+            }, 2500)
+        }
     }
 
     onChangeValue = (e) => {
@@ -31,9 +45,11 @@ class EmployeesAddForm extends Component{
     }
 
     render() {
+
         return (
             <div className="app-add-form">
-                <h3>Добавьте нового сотрудника</h3>
+                <h3>Добавте нового сотрудника</h3>
+                <h4>{this.state.error}</h4>
                 <form
                     className="add-form d-flex">
                     <input type="text"
